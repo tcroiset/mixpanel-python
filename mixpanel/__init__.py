@@ -14,9 +14,13 @@ import json
 import time
 import urllib
 import urllib2
+import warnings
 
-__version__ = '4.0.2'
+__version__ = '4.0.3'
 VERSION = __version__  # TODO: remove when bumping major version.
+warnings.warn('The official Mixpanel Python library has moved from mixpanel-py to mixpanel. '
+              'Updates will be published only to <https://pypi.python.org/pypi/mixpanel>.',
+              stacklevel=2)
 
 
 class DatetimeSerializer(json.JSONEncoder):
