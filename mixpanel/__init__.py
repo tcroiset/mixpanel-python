@@ -40,7 +40,6 @@ def json_dumps(data, cls=None):
     # Separators are specified to eliminate whitespace.
     return json.dumps(data, separators=(',', ':'), cls=cls)
 
-
 class Mixpanel(object):
     """Instances of Mixpanel are used for all events and profile updates.
 
@@ -64,7 +63,7 @@ class Mixpanel(object):
     def _now(self):
         return time.time()
 
-    def track(self, distinct_id, event_name, properties=None, meta=None):
+    def track(self, distinct_id, event_name, properties=None, meta=None, custom_ts=None):
         """Record an event.
 
         :param str distinct_id: identifies the user triggering the event
@@ -77,10 +76,14 @@ class Mixpanel(object):
         aspects of the source or user associated with it. ``meta`` is used
         (rarely) to override special values sent in the event object.
         """
+        if custom_ts is None:
+            event_time = int(self._now())
+        else:
+            event_time = custom_ts
         all_properties = {
             'token': self._token,
             'distinct_id': distinct_id,
-            'time': int(self._now()),
+            'time': event_time,
             'mp_lib': 'python',
             '$lib_version': __version__,
         }
