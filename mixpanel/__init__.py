@@ -373,7 +373,11 @@ class Consumer(object):
             # an internal socket timeout, not None.
             if self._request_timeout is not None:
                 print 'MX2', self._request_timeout
-                response = urllib.request.urlopen(request, timeout=self._request_timeout).read()
+                # response = urllib.request.urlopen(request, timeout=self._request_timeout).read()
+                uo = urllib.request.urlopen(request, timeout=self._request_timeout)
+                print 'MX2b'
+                response = uo.read()
+                print 'MX2c'
             else:
                 print 'MX3'
                 response = urllib.request.urlopen(request).read()
