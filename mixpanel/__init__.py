@@ -365,16 +365,20 @@ class Consumer(object):
         if api_key:
             data.update({'api_key': api_key})
         encoded_data = urllib.parse.urlencode(data).encode('utf8')
+        print 'MX1'
         try:
             request = urllib.request.Request(request_url, encoded_data)
 
             # Note: We don't send timeout=None here, because the timeout in urllib2 defaults to
             # an internal socket timeout, not None.
             if self._request_timeout is not None:
+                print 'MX2', self._request_timeout
                 response = urllib.request.urlopen(request, timeout=self._request_timeout).read()
             else:
+                print 'MX3'
                 response = urllib.request.urlopen(request).read()
         except urllib.error.URLError as e:
+            print 'MX4'
             raise six.raise_from(MixpanelException(e), e)
 
         try:
